@@ -9,17 +9,6 @@
 		FROM member
 		WHERE id=#{id} AND password=#{password}
 	</select>
-	<update id="updateProfile" parameterType="member">
-		update set member name = #{name}, password = #{password}, profile_img_url =
-		#{profileImgUrl},
-		phone_number = #{phoneNumber}, email = #{email}, total_point = #{totalPoint}, job
-		= #{job}, gender = #{gender}
-		where member_id = #{memberId}
-		union
-		update member_address set member_address = #{member_Address}, lat =
-		#{memberAddressVO.lat}, leg = #{memberAddressVO.leg} where member_id =
-		#{memberAddressVO.memberId}
-	</update>
 </mapper>
 
 
