@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases>
+		<typeAlias type="matitda.model.VO.ApplyVO" alias="Apply"/>
+		<typeAlias type="matitda.model.VO.GradeVO" alias="Grade"/>
+		<typeAlias type="matitda.model.VO.HashtagVO" alias="Hashtag"/>
+		<typeAlias type="matitda.model.VO.MemberAddressVO" alias="Memberaddress"/>
+		<typeAlias type="matitda.model.VO.MemberVO" alias="Member"/>
+		<typeAlias type="matitda.model.VO.PointHistoryVO" alias="Pointhistory"/>
+		<typeAlias type="matitda.model.VO.QnaVO" alias="Qna"/>
+		<typeAlias type="matitda.model.VO.RecipeAddressVO" alias="Recipeadress"/>
+		<typeAlias type="matitda.model.VO.RecipeImgUrlVO" alias="Recipeimgurl"/>
+		<typeAlias type="matitda.model.VO.RecipeVO" alias="Recipe"/>
+		<typeAlias type="matitda.model.VO.ReplyVO" alias="Reply"/>
+		<typeAlias type="matitda.model.VO.ReReplyVO" alias="Rereply"/>
+		<typeAlias type="matitda.model.VO.ReviewImgUrlVO" alias="Reviewimgurl"/>
+		<typeAlias type="matitda.model.VO.ReviewVO" alias="Review"/>
+		<typeAlias type="matitda.model.VO.ZzimChefVO" alias="Zzimchef"/>
+		<typeAlias type="matitda.model.VO.ZzimRecipeVO" alias="Zzimrecipe"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<!-- POOLED | JNDI -->
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="${JDBC.driver}"/>
+				<property name="url" value="${JDBC.ConnectionURL}"/>
+				<property name="username" value="${JDBC.Username}"/>
+				<property name="password" value="${JDBC.Password}"/>
+			</dataSource>
+		</environment>	
+	</environments>
+	<mappers>
+		<mapper resource="sql/member.xml"/>
+		<mapper resource="sql/recipe.xml"/>
+		<mapper resource="sql/apply.xml"/>
+		<mapper resource="sql/grade.xml"/>
+		<mapper resource="sql/hashtag.xml"/>
+		<mapper resource="sql/memberaddress.xml"/>
+		<mapper resource="sql/pointhistory.xml"/>
+		<mapper resource="sql/qna.xml"/>
+		<mapper resource="sql/recipeaddress.xml"/>
+		<mapper resource="sql/recipeimgurl.xml"/>
+		<mapper resource="sql/recipe.xml"/>
+		<mapper resource="sql/reply.xml"/>
+		<mapper resource="sql/rereply.xml"/>
+		<mapper resource="sql/reviewimgurl.xml"/>
+		<mapper resource="sql/review.xml"/>
+		<mapper resource="sql/zzimchef.xml"/>
+		<mapper resource="sql/zzimrecipe.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+
+
+
+
