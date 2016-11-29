@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  member -->	
+<mapper namespace="Member">
+	<resultMap type="member" id="memberResult">
+	<result column="member_id" property="memberId" jdbcType="VARCHAR"/>
+	<result column="name" property="name" jdbcType="VARCHAR"/>
+	<result column="password" property="password" jdbcType="VARCHAR"/>
+	<result column="profile_img_url" property="profileImgUrl" jdbcType="VARCHAR"/>
+	<result column="phone_number" property="phoneNumber" jdbcType="VARCHAR"/>
+	<result column="email" property="email" jdbcType="VARCHAR"/>
+	<result column="total_point" property="totalPoint" jdbcType="INTEGER"/>
+	<result column="job" property="job" jdbcType="VARCHAR"/>
+	<result column="gender" property="gender" jdbcType="VARCHAR"/>
+	<result column="member_address" property="memberAddress" jdbcType="VARCHAR"/>
+	<result column="lat" property="lat" jdbcType="INTEGER"/>
+	<result column="lng" property="lng" jdbcType="INTEGER"/>
+	</resultMap>
+	
+	
+	<insert id="register" parameterType="member">
+		INSERT INTO MEMBER VALUES(#{memberId},#{name}
+		,#{password},#{profileImgUrl},#{phoneNumber},#{email},#{totalPoint}
+		,#{job},#{gender},#{memberAddress},#{lat},#{lng})
+	</insert>
+	<delete id="deleteMember" parameterType="member">
+		DELETE FROM MEMBER WHERE MEMBER_ID= #{memberId}
+	</delete>
+   
+   <select id="getMemberInfo" parameterType="member" resultMap="memberResult">
+      SELECT
+      * FROM member
+      WHERE member_id=#{memberId}
+   </select>
+   
+   <select id="idCheck" parameterType="member" resultType="string">
+       SELECT
+       member_id
+       FROM member
+       WHERE member_id=#{memberId}
+   </select>
+   
+   <update id="update" parameterType="member">
+      update
+      member set  name = #{name}, password = #{password}, profile_img_url = #{profileImgUrl}, phone_number = #{phoneNumber}, email = #{email}, total_point = #{totalPoint},
+      job = #{job}, gender = #{gender},member_address = #{memberAddress}, lat = #{lat}, lng = #{lng}
+      where member_id = #{memberId}
+   </update>
+   <update id="updateProfile" parameterType="member">
+      update
+      member set profile_img_url = #{profileImgUrl}
+      where member_id = #{memberId}
+   </update>
+   
+   <select id="login" parameterType="member" resultMap="memberResult">
+      SELECT 
+      member_id , password, name, profile_img_url , phone_number, email, total_point,
+      job,gender, member_address, lng, lat FROM member
+      WHERE member_id=#{memberId} and password = #{password}
+   </select>
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

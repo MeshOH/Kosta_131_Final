@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+<context:property-placeholder location="classpath:config/jdbc.properties"/>
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<property name="driverClassName" value="${JDBC.Driver}"/>
+	<property name="url" value="${JDBC.ConnectionURL}"/>
+	<property name="username" value="${JDBC.Username}"/>
+	<property name="password" value="${JDBC.Password}"/>
+</bean>
+<!-- 2. MyBatis 설정 부분 ::  sqlSessionFactory,sqlSession 둥록-->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="configLocation" value="classpath:/config/SqlMapConfig.xml"/>
+	<property name="dataSource" ref="dataSource"/>
+</bean>
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSessionFactory"/>
+</bean>
+
+ <!--3. MemberDao/MemberService 설정 ::id는 각각 memberDao, memberService -->
+<bean id="memberDAO" class="matitda.model.DAO.impl.MemberDAOImpl">
+	<property name="sqlSession" ref="sqlSession"/>
+</bean>
+<bean id="memberService" class="matitda.model.service.impl.MemberServiceImpl">
+	<property name="memberDAO" ref="memberDAO"/>		
+</bean>
+
+<!-- 4. 라이브러리빈 설정부분 :: handlerMapping, viewResolver-->
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/"/>
+	<property name="suffix" value=".jsp"/>	
+	<property name="order" value="1"/>
+</bean>
+
+
+<!-- 5. 컨트롤러 설정부분 :: methodNameResolver, MemberController-->
+<bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<property name="order" value="0"/>
+</bean>
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<property name="defaultEncoding" value="utf-8"/>
+	<property name="maxUploadSize" value="-1"/>
+</bean>
+ <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+ 	<property name="paramName" value="command"/>
+ </bean>
+ <bean name="/member.do" class="matitda.model.controller.MemberController">
+ 	<property name="methodNameResolver" ref="methodNameResolver"/>
+ 	<property name="memberServiceImpl" ref="memberService"/>
+ </bean>
+ 
+ <bean name="JsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+
+
+</beans>
